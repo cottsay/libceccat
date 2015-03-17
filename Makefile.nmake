@@ -1,0 +1,25 @@
+CC=cl.exe
+LINK=link.exe
+DEL=del
+RMDIR=rmdir
+MKDIR=mkdir
+
+SRCDIR=src
+OBJDIR=obj
+
+LIBCECPATH="C:\Program Files (x86)\Pulse-Eight\USB-CEC Adapter"
+
+CFLAGS=/nologo /W4 /WX /D_CRT_SECURE_NO_WARNINGS /I$(LIBCECPATH)/include
+LFLAGS=/nologo
+
+libceccat.exe: $(OBJDIR)\libceccat.obj
+	$(LINK) $(LFLAGS) /out:$@ $**
+
+$(OBJDIR)\libceccat.obj: $(SRCDIR)\libceccat.c
+	if not exist $(OBJDIR) $(MKDIR) $(OBJDIR)
+	$(CC) $(CFLAGS) /c /Fo$@ $**
+
+clean:
+	-$(RMDIR) /S /Q $(OBJDIR)
+	-$(DEL) libceccat.exe
+
